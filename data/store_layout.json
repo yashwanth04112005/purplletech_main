@@ -1,0 +1,85 @@
+[
+  {
+    "store_id": "STORE_BLR_002",
+    "name": "Apex Retail Bangalore 2",
+    "city": "Bangalore",
+    "open_hours": { "open": "10:00", "close": "21:00", "timezone": "Asia/Kolkata" },
+    "cameras": ["CAM_ENTRY_01", "CAM_FLOOR_01", "CAM_BILLING_01"],
+    "zones": [
+      {
+        "zone_id": "ENTRY",
+        "name": "Entry / Exit Threshold",
+        "cameras": ["CAM_ENTRY_01"],
+        "x0": 0, "y0": 600, "x1": 1920, "y1": 1080,
+        "type": "threshold"
+      },
+      {
+        "zone_id": "SKINCARE",
+        "name": "Skincare Aisle",
+        "cameras": ["CAM_FLOOR_01"],
+        "x0": 0, "y0": 0, "x1": 640, "y1": 720,
+        "sku_zone": "MOISTURISER",
+        "type": "product"
+      },
+      {
+        "zone_id": "HAIRCARE",
+        "name": "Hair Care Aisle",
+        "cameras": ["CAM_FLOOR_01"],
+        "x0": 640, "y0": 0, "x1": 1280, "y1": 720,
+        "sku_zone": "HAIRCARE",
+        "type": "product"
+      },
+      {
+        "zone_id": "MAKEUP",
+        "name": "Makeup & Colour Cosmetics",
+        "cameras": ["CAM_FLOOR_01"],
+        "x0": 1280, "y0": 0, "x1": 1920, "y1": 720,
+        "sku_zone": "MAKEUP",
+        "type": "product"
+      },
+      {
+        "zone_id": "FRAGRANCES",
+        "name": "Fragrances",
+        "cameras": ["CAM_FLOOR_01"],
+        "x0": 0, "y0": 720, "x1": 640, "y1": 1080,
+        "sku_zone": "FRAGRANCES",
+        "type": "product"
+      },
+      {
+        "zone_id": "BILLING",
+        "name": "Billing Counter",
+        "cameras": ["CAM_BILLING_01"],
+        "x0": 0, "y0": 0, "x1": 1920, "y1": 1080,
+        "sku_zone": "BILLING_COUNTER",
+        "type": "billing"
+      }
+    ]
+  },
+  {
+    "store_id": "STORE_BLR_003",
+    "name": "Apex Retail Bangalore 3",
+    "city": "Bangalore",
+    "open_hours": { "open": "10:00", "close": "21:00", "timezone": "Asia/Kolkata" },
+    "cameras": ["CAM_ENTRY_01", "CAM_FLOOR_01", "CAM_BILLING_01"],
+    "zones": [
+      { "zone_id": "ENTRY",      "cameras": ["CAM_ENTRY_01"],   "x0": 0,    "y0": 500, "x1": 1920, "y1": 1080 },
+      { "zone_id": "SKINCARE",   "cameras": ["CAM_FLOOR_01"],   "x0": 0,    "y0": 0,   "x1": 960,  "y1": 1080 },
+      { "zone_id": "HAIRCARE",   "cameras": ["CAM_FLOOR_01"],   "x0": 960,  "y0": 0,   "x1": 1920, "y1": 1080 },
+      { "zone_id": "BILLING",    "cameras": ["CAM_BILLING_01"], "x0": 0,    "y0": 0,   "x1": 1920, "y1": 1080 }
+    ]
+  },
+  {
+    "store_id": "STORE_MUM_001",
+    "name": "Apex Retail Mumbai 1",
+    "city": "Mumbai",
+    "open_hours": { "open": "10:00", "close": "22:00", "timezone": "Asia/Kolkata" },
+    "cameras": ["CAM_ENTRY_01", "CAM_FLOOR_01", "CAM_BILLING_01"],
+    "zones": [
+      { "zone_id": "ENTRY",      "cameras": ["CAM_ENTRY_01"],   "x0": 0,    "y0": 600, "x1": 1920, "y1": 1080 },
+      { "zone_id": "SKINCARE",   "cameras": ["CAM_FLOOR_01"],   "x0": 0,    "y0": 0,   "x1": 640,  "y1": 1080 },
+      { "zone_id": "MAKEUP",     "cameras": ["CAM_FLOOR_01"],   "x0": 640,  "y0": 0,   "x1": 1280, "y1": 1080 },
+      { "zone_id": "HAIRCARE",   "cameras": ["CAM_FLOOR_01"],   "x0": 1280, "y0": 0,   "x1": 1920, "y1": 1080 },
+      { "zone_id": "BILLING",    "cameras": ["CAM_BILLING_01"], "x0": 0,    "y0": 0,   "x1": 1920, "y1": 1080 }
+    ]
+  }
+]
