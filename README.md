@@ -18,6 +18,93 @@ open http://localhost:8000/docs   # Swagger UI
 > **API Docs**: http://localhost:8000/docs  
 > **Health**: http://localhost:8000/health
 
+## Start Here
+
+Choose the path that matches how you want to run the project.
+
+### 1) With Docker
+
+Use this for the full stack: API, Postgres, Redis, and dashboard.
+
+```bash
+cp .env.example .env
+docker compose up -d
+```
+
+Open these URLs after the stack starts:
+
+- API docs: http://localhost:8000/docs
+- Health check: http://localhost:8000/health
+- Dashboard: http://localhost:3000
+
+If you want to run tests inside the API container:
+
+```bash
+docker compose exec api pytest tests/ -v --cov=app --cov-report=html
+```
+
+### 2) Without Docker
+
+Use this when you want to run the API and dashboard locally on your machine.
+
+1. Create the environment file:
+
+```bash
+cp .env.example .env
+```
+
+2. Start the API without Docker startup checks.
+
+PowerShell:
+
+```powershell
+$env:SKIP_STARTUP='true'; & ".venv/Scripts/python.exe" -m uvicorn app.main:app --host 0.0.0.0 --port 8000
+```
+
+Linux/macOS:
+
+```bash
+SKIP_STARTUP=true python -m uvicorn app.main:app --host 0.0.0.0 --port 8000
+```
+
+3. Start the dashboard locally.
+
+```bash
+cd dashboard
+npm install
+npm start
+```
+
+4. Open the UI and API.
+
+- Dashboard: http://localhost:3000?store=STORE_BLR_002
+- API docs: http://localhost:8000/docs
+- Health check: http://localhost:8000/health
+
+When Postgres and Redis are not running, the API still starts but `db_connected=false` and `cache_connected=false` on `/health`.
+
+### 3) Offline video processing
+
+Use these scripts when you only want to generate event JSONL files from clips.
+
+```powershell
+.\run_pipeline_offline.ps1
+```
+
+This script prepares the folders, moves the clips, and runs detection without requiring the API, Postgres, or Redis.
+
+The older Windows helper is still available if you want a direct clip-to-event flow:
+
+```powershell
+.\process_videos.ps1
+```
+
+After JSONL files are created, replay them into the API:
+
+```bash
+python pipeline/replay.py --events-dir data/events --api-url http://localhost:8000 --speed 10
+```
+
 ---
 
 ## Architecture Overview
@@ -156,52 +243,6 @@ The dashboard at **http://localhost:3000** shows:
 To drive the dashboard with your own clips:
 ```bash
 python pipeline/replay.py --events-dir data/events --speed 5
-```
-
-## Local development (no Docker)
-
-If you don't want to run the full `docker compose` stack you can run the API and dashboard locally for quick validation. Note: without Postgres and Redis some features (ingest persistence, WebSocket pub/sub, POS correlation) will be degraded.
-
-1) Create `.env` (copy from example):
-
-```bash
-cp .env.example .env
-# edit .env to set DATABASE_URL and REDIS_URL if you plan to run external DB/Redis
-```
-
-2) Run the API without requiring Postgres/Redis startup checks (quick validation):
-
-PowerShell:
-```powershell
-$env:SKIP_STARTUP='true'; & ".venv/Scripts/python.exe" -m uvicorn app.main:app --host 0.0.0.0 --port 8000
-```
-
-Linux/macOS:
-```bash
-SKIP_STARTUP=true python -m uvicorn app.main:app --host 0.0.0.0 --port 8000
-```
-
-The `/health` endpoint will return `db_connected=false` and `cache_connected=false` when DB/Redis are not running. To get full functionality stop setting `SKIP_STARTUP` and ensure Postgres/Redis are reachable (via Docker or external services).
-
-3) Run the dashboard server locally (serves the UI and proxies WebSocket to the API):
-
-```bash
-cd dashboard
-npm install
-node server.js
-# open http://localhost:3000?store=STORE_BLR_002
-```
-
-4) Replay events into the API (simulated real-time):
-
-```bash
-python pipeline/replay.py --events-dir data/events --api-url http://localhost:8000 --speed 10
-```
-
-For full acceptance testing (ingest + metrics + WebSocket) run the Compose stack:
-
-```bash
-docker compose up -d
 ```
 
 
