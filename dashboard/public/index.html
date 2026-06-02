@@ -626,10 +626,12 @@ function connect(storeId) {
 async function pollExtras() {
   const base = `${location.protocol}//${location.hostname}:8000`;
   try {
-    const [funnelRes, heatmapRes] = await Promise.all([
+    const [metricsRes, funnelRes, heatmapRes] = await Promise.all([
+      fetch(`${base}/stores/${currentStore}/metrics`),
       fetch(`${base}/stores/${currentStore}/funnel`),
       fetch(`${base}/stores/${currentStore}/heatmap`),
     ]);
+    if (metricsRes.ok) renderMetrics(await metricsRes.json());
     if (funnelRes.ok) renderFunnel(await funnelRes.json());
     if (heatmapRes.ok) renderHeatmap(await heatmapRes.json());
   } catch {}
